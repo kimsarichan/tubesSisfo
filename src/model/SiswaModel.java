@@ -17,10 +17,10 @@ import java.util.logging.Logger;
  */
 public class SiswaModel {
     private String Nama, Kelas,Jurusan,NIS,WaliKelas;
+    private KelasModel kel;
     private int Angkatan;
     private Database db;
     private ResultSet rs;
-
     public SiswaModel(Database db) {
         this.db = db;
     }
@@ -83,6 +83,7 @@ public class SiswaModel {
 
             db.query(query);
             rs.close();
+            kel.updateSiswa();
         } catch (Exception e) {
 
         }
@@ -106,11 +107,33 @@ public class SiswaModel {
         }
         
     }
-    public void updateData(){
+    public void updateData(String nama, String waliKelas, String jurusan, String kelas,int angkatan,String nis){
+        String query;
+        query = "update siswa set NIS=" + nis + ", set Nama =" + nama + ", set WaliKelas= " + waliKelas + ", set Jurusan=" + jurusan + ", set angkatan=" + angkatan + " ";
+        db.query(query);
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(KelasModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     public void deleteData(){
+         String query;
+        query = "delete from siswa where NIS =" + NIS;
+        db.query(query);
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(KelasModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    public void getBayarDSP(){
+    }
+    public void getBayarSPP(){
+    
+    }
+            
     
    
     

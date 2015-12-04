@@ -70,6 +70,7 @@ public class SppModel {
     }
     
     public void saveData(){
+        
     }
     public void loadData(){
     }
@@ -78,4 +79,7 @@ public class SppModel {
     public void deleteData(){
     }
       
+}
+class SPP_all{
+    
 }
