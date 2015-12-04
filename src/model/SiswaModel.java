@@ -18,9 +18,10 @@ import java.util.logging.Logger;
 public class SiswaModel {
     private String Nama, Kelas,Jurusan,NIS,WaliKelas;
     private KelasModel kel;
-    private int Angkatan;
+    private int Angkatan,totalspp,totaldsp;
     private Database db;
     private ResultSet rs;
+    
     public SiswaModel(Database db) {
         this.db = db;
     }
@@ -72,14 +73,14 @@ public class SiswaModel {
     public void setDb(Database db) {
         this.db = db;
     }
-     public void saveData(String nama, String waliKelas, String jurusan, String kelas,int angkatan,String nis ){
+     public void saveData( ){
         String query;
         ResultSet rs = null;
         try {
 
             query = "insert into kelas"
                     + "(NIS, Nama, WaliKelas,Jurusan,Angkatan,Kelas)"
-                    + "values ('" + nis + "'," + "'" + nama + "'," + "'" + waliKelas + ",'" + jurusan + ",'" + angkatan + ",'"+kelas+"')";
+                    + "values ('" + this.NIS + "'," + "'" + this.Nama + "'," + "'" + this.WaliKelas + ",'" + this.Jurusan + ",'" + this.Angkatan + ",'"+this.Kelas+"')";
 
             db.query(query);
             rs.close();
@@ -99,6 +100,8 @@ public class SiswaModel {
                 this.Jurusan= rs.getString("Jurusan");
                 this.Angkatan = rs.getInt("Angkatan");
                 this.Kelas = rs.getString("Kelas");
+                this.totalspp=rs.getInt("Total_spp");
+                 this.totalspp=rs.getInt("Total_dsp");
             }
 
             rs.close();
@@ -120,7 +123,7 @@ public class SiswaModel {
     }
     public void deleteData(){
          String query;
-        query = "delete from siswa where NIS =" + NIS;
+        query = "delete from siswa where NIS =" + this.NIS;
         db.query(query);
         try {
             rs.close();
@@ -128,11 +131,13 @@ public class SiswaModel {
             Logger.getLogger(KelasModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void getBayarDSP(){
+ 
+    public void tambahTotalSPP(int spp){
+       this.totalspp= totalspp
     }
-    public void getBayarSPP(){
     
-    }
+   
+   
             
     
    

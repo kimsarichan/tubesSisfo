@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2015 at 02:23 PM
+-- Generation Time: Dec 04, 2015 at 03:29 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -50,7 +50,6 @@ CREATE TABLE IF NOT EXISTS `dsp` (
   `No_pembayaran` varchar(28) NOT NULL,
   `NIS` varchar(28) NOT NULL DEFAULT '',
   `Tagihan` int(11) NOT NULL,
-  `Total_Pemabyaran` int(11) NOT NULL,
   `Tgl_pembayaran` date NOT NULL,
   PRIMARY KEY (`No_pembayaran`),
   UNIQUE KEY `NIS` (`NIS`)
@@ -84,6 +83,8 @@ CREATE TABLE IF NOT EXISTS `siswa` (
   `Angkatan` int(11) NOT NULL,
   `Jurusan` varchar(30) NOT NULL,
   `NIS` varchar(28) NOT NULL,
+  `Total_spp` int(11) NOT NULL,
+  `Total_dsp` int(11) NOT NULL,
   PRIMARY KEY (`NIS`),
   UNIQUE KEY `Kelas` (`Kelas`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -95,15 +96,14 @@ CREATE TABLE IF NOT EXISTS `siswa` (
 --
 
 CREATE TABLE IF NOT EXISTS `spp` (
-  `No_pembayaran` varchar(28) NOT NULL,
+  `No_pembayaran` int(28) NOT NULL AUTO_INCREMENT,
   `NIS` varchar(28) DEFAULT NULL,
   `Bulan` varchar(30) NOT NULL,
-  `Total` int(11) NOT NULL,
   `Iuran` int(11) NOT NULL,
   `Tgl_pembayarab` date NOT NULL,
   PRIMARY KEY (`No_pembayaran`),
   UNIQUE KEY `NIS` (`NIS`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Constraints for dumped tables

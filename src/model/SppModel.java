@@ -7,16 +7,20 @@
 package model;
 
 import java.util.Date;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author sari
  */
 public class SppModel {
-    private String no_bayar, NIS, bulan, Total, Iuran;
+    private String no_bayar, NIS, bulan ;
+    private int Iuran;
     private Date tgl_pembayaran;
     private Database db;
-
+    private ResultSet rs;
     public SppModel(Database db) {
         this.db = db;
     }
@@ -45,19 +49,12 @@ public class SppModel {
         this.bulan = bulan;
     }
 
-    public String getTotal() {
-        return Total;
-    }
 
-    public void setTotal(String Total) {
-        this.Total = Total;
-    }
-
-    public String getIuran() {
+    public int getIuran() {
         return Iuran;
     }
 
-    public void setIuran(String Iuran) {
+    public void setIuran(int  Iuran) {
         this.Iuran = Iuran;
     }
 
@@ -70,16 +67,44 @@ public class SppModel {
     }
     
     public void saveData(){
-        
+        String query;
+        ResultSet rs = null;
+        try {
+
+            query = "insert into SPP"
+                    + "(NIS, tgl_pembayaran, iuran)"
+                    + "values ('" + this.NIS + "'," + "'" + (java.sql.Date) this.tgl_pembayaran + ",'" + this.Iuran +"')";
+
+            db.query(query);
+            rs.close();
+        } catch (Exception e) {
+
+        }
     }
-    public void loadData(){
+    public void loadData_bayaranSiswa(int nomor){
+         try {
+            String query = "select * from SPP where No_pembayaran =" + nomor;
+            rs = db.getData(query);
+            while (rs.next()) {
+               this.bulan=rs.getString("Bulan");
+               this.tgl_pembayaran=rs.getDate("Tgl_pembayaran");
+               this.Iuran=rs.getInt(Iuran);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SiswaModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    public void updateData(){
-    }
-    public void deleteData(){
+    public void deleteData(int nomor){
+      String query;
+        query = "delete from spp where No_pembayaran =" + nomor;
+        db.query(query);
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(KelasModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
       
-}
-class SPP_all{
-    
 }
