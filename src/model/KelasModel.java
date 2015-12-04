@@ -18,8 +18,8 @@ import java.util.logging.Logger;
  */
 public class KelasModel {
 
-    private String kelas, jumlahsiswa, walikelas, jurusan;
-    private int angkatan;
+    private String kelas, walikelas, jurusan;
+    private int angkatan, jumlahsiswa;
     private Date tgl_pembayaran;
     private Database db;
     private ResultSet rs;
@@ -32,11 +32,11 @@ public class KelasModel {
         this.kelas = kelas;
     }
 
-    public String getJumlahsiswa() {
+    public int getJumlahsiswa() {
         return jumlahsiswa;
     }
 
-    public void setJumlahsiswa(String jumlahsiswa) {
+    public void setJumlahsiswa(int jumlahsiswa) {
         this.jumlahsiswa = jumlahsiswa;
     }
 
@@ -94,7 +94,7 @@ public class KelasModel {
             rs = db.getData(query);
             while (rs.next()) {
                 this.kelas = rs.getString("Kelas");
-                this.jumlahsiswa = rs.getString("JumlahSiswa");
+                this.jumlahsiswa = rs.getInt("JumlahSiswa");
                 this.walikelas = rs.getString("WaliKelas");
                 this.jurusan = rs.getString("Jurusan");
                 this.angkatan = rs.getInt("Angkatan");
@@ -108,7 +108,17 @@ public class KelasModel {
 
     public void updateData(String kelas, String jumlahsiswa, String walikelas, String jurusan, String angkatan) {
         String query;
-        query = "update kelas set Kelas=" + kelas + ", set JumlahSiswa =" + jumlahsiswa + ", set WaliKelas= " + walikelas + ", set Jurusan=" + jurusan + ", set angkatan=" + angkatan + " ";
+        query = "update kelas set Kelas=" + kelas + ", set JumlahSiswa =" + jumlahsiswa + ", set WaliKelas= " + walikelas + ", set Jurusan=" + jurusan + ", set angkatan=" + angkatan + " where kelas= "+this.kelas;
+        db.query(query);
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(KelasModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updateSiswa(){
+         String query;
+        query = "update kelas set JumlahSiswa =" + this.jumlahsiswa +"where kelas= "+this.kelas ;
         db.query(query);
         try {
             rs.close();
@@ -117,9 +127,9 @@ public class KelasModel {
         }
     }
 
-    public void deleteData(String NIS) {
+    public void deleteData(String kelas) {
         String query;
-        query = "delete from kelas where NIS =" + NIS;
+        query = "delete from kelas where kelas =" + kelas;
         db.query(query);
         try {
             rs.close();
@@ -150,7 +160,7 @@ class semuaKelas {
             while (rs.next()) {
                 KelasModel kelas = new KelasModel();
                 kelas.setKelas(rs.getString("Kelas"));
-                kelas.setJumlahsiswa(rs.getString("JumlahSiswa"));
+                kelas.setJumlahsiswa(rs.getInt("JumlahSiswa"));
                 kelas.setWalikelas(rs.getString("WaliKelas"));
                 kelas.setJurusan(rs.getString("Jurusan"));
                 kelas.setAngkatan(rs.getInt("Angkatan"));
@@ -174,7 +184,7 @@ class semuaKelas {
             while (rs.next()) {
                 KelasModel kelas = new KelasModel();
                 kelas.setKelas(rs.getString("Kelas"));
-                kelas.setJumlahsiswa(rs.getString("JumlahSiswa"));
+                kelas.setJumlahsiswa(rs.getInt("JumlahSiswa"));
                 kelas.setWalikelas(rs.getString("WaliKelas"));
                 kelas.setJurusan(rs.getString("Jurusan"));
                 kelas.setAngkatan(rs.getInt("Angkatan"));
@@ -197,7 +207,7 @@ class semuaKelas {
             while (rs.next()) {
                 KelasModel kelas = new KelasModel();
                 kelas.setKelas(rs.getString("Kelas"));
-                kelas.setJumlahsiswa(rs.getString("JumlahSiswa"));
+                kelas.setJumlahsiswa(rs.getInt("JumlahSiswa"));
                 kelas.setWalikelas(rs.getString("WaliKelas"));
                 kelas.setJurusan(rs.getString("Jurusan"));
                 kelas.setAngkatan(rs.getInt("Angkatan"));
