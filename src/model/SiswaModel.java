@@ -8,6 +8,7 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,36 @@ public class SiswaModel {
     private int Angkatan,totalspp,totaldsp;
     private Database db;
     private ResultSet rs;
+
+    public SiswaModel() {
+        db= new Database();
+    }
+    
+    
+    public String getWaliKelas() {
+        return WaliKelas;
+    }
+
+    public void setWaliKelas(String WaliKelas) {
+        this.WaliKelas = WaliKelas;
+    }
+
+    public int getTotalspp() {
+        return totalspp;
+    }
+
+    public void setTotalspp(int totalspp) {
+        this.totalspp = totalspp;
+    }
+
+    public int getTotaldsp() {
+        return totaldsp;
+    }
+
+    public void setTotaldsp(int totaldsp) {
+        this.totaldsp = totaldsp;
+    }
+    
     
     public SiswaModel(Database db) {
         this.db = db;
@@ -91,7 +122,7 @@ public class SiswaModel {
     }
     public void loadData(String NIS){
         try {
-            String query = "select * from siswa where NIS =" + NIS;
+            String query = "select * from siswa where kelas =" + NIS;
             rs = db.getData(query);
             while (rs.next()) {
                 this.NIS= rs.getString("NIS");
@@ -101,7 +132,7 @@ public class SiswaModel {
                 this.Angkatan = rs.getInt("Angkatan");
                 this.Kelas = rs.getString("Kelas");
                 this.totalspp=rs.getInt("Total_spp");
-                 this.totalspp=rs.getInt("Total_dsp");
+                this.totaldsp=rs.getInt("Total_dsp");
             }
 
             rs.close();
@@ -133,16 +164,48 @@ public class SiswaModel {
     }
  
     public void tambahTotalSPP(int spp){
-       //this.totalspp= totalspp
+       this.totalspp= spp+this.totalspp;
+       String query;
+        query = "update siswa set Total_spp=" + this.totalspp+ "where  NIS = "+this.NIS;
+        db.query(query);
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(KelasModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
-    
-   
-   
-            
-    
-   
-    
 }
 class semuaSiswa{
+    ResultSet rs;
+    Database db;
+
+    public semuaSiswa() {
+        db = new Database();
+    }
     
+    public ArrayList<SiswaModel>  allclas(String Kelas){
+        ArrayList<SiswaModel> k = new ArrayList();
+        try {
+            String query = "select * from nama where kelas =" + Kelas;
+            int i = 0;
+            rs = db.getData(query);
+            while (rs.next()) {
+                SiswaModel d = new SiswaModel();
+                d.setNIS(rs.getString("NIS"));
+                d.setNama(rs.getString("Nama"));
+                d.setKelas(rs.getString("WaliKelas"));
+                d.setJurusan(rs.getString("Jurusan"));
+                d.setAngkatan(rs.getInt("Angkatan"));
+                d.setKelas(rs.getString("Kelas"));
+                d.setTotalspp(rs.getInt("Total_spp"));
+                d.setTotaldsp(rs.getInt("Total_dsp"));
+                i++;
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(semuaKelas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return k;
+    }
 }
