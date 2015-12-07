@@ -142,8 +142,18 @@ public class View extends javax.swing.JFrame {
         getContentPane().add(jPanel1, "card2");
 
         jButton3.setText("Buat Laporan Pembayaran");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Data Pembayaran DSP dan SPP");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -556,7 +566,7 @@ public class View extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel4, "card3");
+        getContentPane().add(jPanel4, "card5");
 
         jPanel5.setPreferredSize(new java.awt.Dimension(598, 392));
 
@@ -672,7 +682,7 @@ public class View extends javax.swing.JFrame {
                 .addContainerGap(279, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel12, "card6");
+        getContentPane().add(jPanel12, "card7");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -681,9 +691,7 @@ public class View extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean log =con_admin.login(username_field.getText(),PasswordField.getText() );
         if(log){
-            Container con = this.getContentPane();
-            CardLayout c = (CardLayout)con.getLayout();
-            c.show(con, "card3");
+            cardtransition("card3");
         }
         else{
             JOptionPane.showMessageDialog(null, "Username dan password salah atau user sudah digunakan", "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -702,6 +710,21 @@ public class View extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        cardtransition("card4");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        cardtransition("card5");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void cardtransition(String cardName){
+        CardLayout cardLayout = (CardLayout) getContentPane().getLayout();
+        cardLayout.show(getContentPane(), cardName);    
+    }
+    
     /**
      * @param args the command line arguments
      */

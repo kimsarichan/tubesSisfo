@@ -133,7 +133,7 @@ public class SiswaModel {
     }
  
     public void tambahTotalSPP(int spp){
-       this.totalspp= totalspp
+       //this.totalspp= totalspp
     }
     
    
